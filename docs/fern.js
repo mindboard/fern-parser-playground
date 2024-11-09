@@ -3,70 +3,28 @@ const baseScript = "let head=r=>r[0],tail=r=>r.slice(1),currentText=r=>r.text.sl
 
 const defaultBorderStyle = "margin-top:1em;padding:0.8em;"
 
-const getInputText = ()=>{
+const getCurrentInputText = ()=>{
     return document.getElementById("inputtext").value
 }
 
-const getMyScript = ()=>{
+const getCurrentParseScript = ()=>{
     const editor = ace.edit("editor")
     return editor.getSession().getValue()
 }
 
-const getDefaultInputText = ()=>{
-    return "Hello, **World**!" + "\n" + "Hello, *Again*!"
-}
-
-const getDefaultMyScript = ()=>{
-    return `\
-const show = (result)=> {
-    if( result.r.ok ){
-        const xs = result.r.xs
-        return xs.map( (it)=> {
-            if( it.kind=="italic" ){ return "<i>" + it.text + "</i>" }
-            if( it.kind=="bold" ){ return "<b>" + it.text + "</b>" }
-            if( it.kind=="lineBreak" ){ return "<br/>" }
-            else if( it.kind=="markup" ){ return "" }
-            else { return it.text }
-        }).join("")
-    } else {
-        return "NG"
-    }
-}
-
-const toJust = (t)=> { return { kind: \"just\", text: t } }
-const toBold = (t)=> { return { kind: \"bold\", text: t } }
-const toItalic = (t)=> { return { kind: \"italic\", text: t } }
-const toMarkup = (t)=> { return { kind: \"markup\", text: t } }
-const toLineBreak = (t)=> { return { kind: "lineBreak", text: t } }
-
-const bold = seq(
-  one(toMarkup, "**"),
-  endBy(toBold, "**"),
-  one(toMarkup, "**"))
-
-const italic = seq(
-  one(toMarkup, "*"),
-  none("*"),
-  endBy(toItalic, "*"),
-  one(toMarkup, "*"))
-
-const lineBreak = one(toLineBreak, "\\n")
-
-const p = zeroOrMore( either( bold, italic, lineBreak, anyone(toJust) ) )
-const result = runWriter(inputText).parse( p )
-show(result)
-`
-}
-
-const doReset = ()=>{
+const reset = (inputText, myScript)=>{
     const eInputText = document.getElementById("inputtext")
-    eInputText.value = getDefaultInputText()
+    eInputText.value = inputText
 
     const editor = ace.edit("editor")
-    editor.getSession().setValue(getDefaultMyScript())
+    editor.getSession().setValue( myScript )
 
     document.getElementById("myresultborderrect").style = defaultBorderStyle + "border: dashed 3px #333;"
     document.getElementById("myresult").value = ""
+}
+
+const doReset = ()=>{
+    reset(getInputTextExample0(), getParseScriptExample0())
 }
 
 const init = ()=>{
@@ -79,16 +37,28 @@ const init = ()=>{
     doReset()
 }
 
-window.onload = ()=> { init() }
+window.onload = ()=>{ init() }
 
-const run = ()=>{
+const changeExampleTo = (n)=>{
+    if( n==1 ){
+        reset(getInputTextExample1(), getParseScriptExample1())
+    } else if( n==2 ){
+        reset(getInputTextExample2(), getParseScriptExample2())
+    } else if( n==3 ){
+        reset(getInputTextExample3(), getParseScriptExample3())
+    } else {
+        reset(getInputTextExample0(), getParseScriptExample0()) 
+    }
+}
+
+const doParse = ()=>{
     getQuickJS().then((QuickJS)=>{
         const vm = QuickJS.newContext()
-        const inputText = vm.newString(getInputText())
-        vm.setProp(vm.global, "inputText", inputText);
+        const inputText = vm.newString(getCurrentInputText())
+        vm.setProp(vm.global, "inputText", inputText)
         inputText.dispose();
 
-        const result = vm.evalCode( baseScript + "\n" + getMyScript() )
+        const result = vm.evalCode( baseScript + "\n" + getCurrentParseScript() )
         if( result.error ){
             document.getElementById("myresult").value = vm.getString(result.error)
             document.getElementById("myresultborderrect").style =

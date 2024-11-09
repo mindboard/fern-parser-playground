@@ -11,6 +11,7 @@
   </style>
   <script src="dist/quickjs.js"></script>
   <script src="fern.js"></script>
+  <script src="fern-examples.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.36.4/ace.js"></script>
 </head>
 <body style="maring: 0; padding: 0.5em 3em 3em 3em;">
@@ -25,17 +26,17 @@
   
   <div style="margin-top: 1em;">
     <label for="editor">Parser Definition</label>
+    &nbsp; &nbsp; / &nbsp; &nbsp; Example : </span>
+    <button onclick="changeExampleTo(1)"> 1 </button> ,
+    <button onclick="changeExampleTo(2)"> 2 </button> ,
+    <button onclick="changeExampleTo(3)"> 3 </button>
+     &nbsp; | &nbsp;
+    <button onclick="changeExampleTo(0)"> Restore defaults</button>
     <div id="editor" style="margin-top: 0.5em;height: 400px; border: solid 2px #33b;"></div>
   </div>
   
   <div style="margin-top: 1em; text-align:center;">
-    <button id="doIt" onclick="run()">Parse the inputText</button>
-     &nbsp;
-     &nbsp;
-     |
-     &nbsp;
-     &nbsp;
-     <button id="doReset" onclick="doReset()">Restore defaults</button>
+    <button onclick="doParse()">Parse the inputText</button>
   </div>
   
   <div style="margin-top: 1em;">
