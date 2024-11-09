@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="UTF-8"/>
+  <title>fern parser playground</title>
+  <style>
+  textarea:focus {
+      border: none;
+      outline: none !important;
+  }
+  </style>
+  <script src="dist/quickjs.js"></script>
+  <script src="fern.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.36.4/ace.js"></script>
+</head>
+<body style="padding:3em;">
+  <h1>fern parser playground</h1>
+
+  <div style="margin-top: 1em;">
+    <label for="inputtext">const inputText = </label>
+    <div id="inputtextborderrect" style="margin-top:0.5em; padding:0.8em; border: solid 2px #33b;">
+      <textarea id="inputtext" style="width:99%; border:none;" rows="3"></textarea>
+    </div>
+  </div>
+  
+  <div style="margin-top: 1em;">
+    <label for="editor">Parser Definition</label>
+    <div id="editor" style="margin-top: 0.5em;height: 400px; border: solid 2px #33b;"></div>
+  </div>
+  
+  <div style="margin-top: 1em; text-align:center;">
+    <button id="doIt" onclick="run()">Parse the inputText</button>
+     &nbsp;
+     &nbsp;
+     |
+     &nbsp;
+     &nbsp;
+     <button id="doReset" onclick="doReset()">Restore defaults</button>
+  </div>
+  
+  <div style="margin-top: 1em;">
+    <label for="myresult">Result:</label>
+    <div id="myresultborderrect" style="margin-top:1em;padding:0.8em; border: dashed 1px #333;">
+      <textarea id="myresult" style="width:99%; border:none;" rows="4" readonly></textarea>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "quickjs-emscripten": "^0.31.0",
+    "webpack": "^5.95.0",
+    "webpack-cli": "^5.1.4"
+  }
+}
