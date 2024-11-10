@@ -18,11 +18,12 @@ const show = (resultW)=> {
 	}
 }
 
-const toJust = (t)=> { return { kind: \"just\", text: t } }
-const toBold = (t)=> { return { kind: \"bold\", text: t } }
+const toJust   = (t)=> { return { kind: \"just\", text: t } }
+const toBold   = (t)=> { return { kind: \"bold\", text: t } }
 const toItalic = (t)=> { return { kind: \"italic\", text: t } }
 const toMarkup = (t)=> { return { kind: \"markup\", text: t } }
-const toLineBreak = (t)=> { return { kind: "lineBreak", text: t } }
+const toLineBreak = (t)=> { return { kind: \"lineBreak\", text: t } }
+const toNothing   = (t)=> { return { kind: \"nothing\", text: t } }
 
 const boldP = seq(
   one(toMarkup, "**"),
@@ -31,7 +32,7 @@ const boldP = seq(
 
 const italicP = seq(
   one(toMarkup, "*"),
-  none("*"),
+  check(none(toNothing, "*")),
   endBy(toItalic, "*"),
   one(toMarkup, "*"))
 
