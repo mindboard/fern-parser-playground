@@ -1,7 +1,9 @@
 
 # Fern Parser Playground
 
-Fern Parser that is a kind of parser combinators is written by JavaScript.
+<img align="right" src="https://github.com/mindboard/fern-parser/blob/main/docs/images/fern-parser.png?raw=true" height="64px" alt="The fern-parser logo"/>
+
+A parser combinator written in TypeScript. In details, see this repository [https://github.com/mindboard/fern-parser](https://github.com/mindboard/fern-parser).
 
 Here is a playground:
 
